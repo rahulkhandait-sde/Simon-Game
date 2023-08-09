@@ -4,11 +4,14 @@ let userSeq = [];
 // Game status
 let started = false;
 let level = 0;
+let highScore = 0;
 //  DOM elements
 let h2 = document.querySelector('h2');
 // Button colors
 const buttonColors = ['red', 'green', 'yellow', 'purple'];
 // Start the game
+// Start button click
+// let startBtn = document.querySelector('#start');
 document.addEventListener('keypress', function () {
 	// Check if the game has started
 	if (!started) {
@@ -17,7 +20,19 @@ document.addEventListener('keypress', function () {
 		// Level up and flash the button
 		levelUp();
 	}
-});
+	// // Change the start button to reset button
+	// let resetBtn = document.querySelector('#start');
+	// resetBtn.innerHTML = 'Reset';
+	// resetBtn.style.backgroundColor = 'red';
+	// resetBtn.addEventListener('click', function () {
+	// 	// Reset the game
+		// reset();
+	// 	// Change the reset button to start button
+	// 	let startBtn = document.querySelector('#start');
+	// 	startBtn.innerHTML = 'Start';
+	// 	startBtn.style.backgroundColor = 'green';
+	});
+// });
 // Button Flash
 function btnFlash(btn) {
 	btn.classList.add('flash');
@@ -50,7 +65,9 @@ function checkAns(idx) {
 			setTimeout(levelUp, 1000);
 		}
 	} else {
-		h2.innerHTML = `Game Over! Your score was <b>${level}</b> <br> Press any key to Restart`;
+		// Game over
+		highScore = checkHighScore(level);
+		h2.innerHTML = `Game Over! Your Score: <b>${level}</b> <br> <b>High Score: ${highScore}</b> <br> Press any key to restart the game`;
 		// Flash the screen red
 		document.querySelector('body').style.backgroundColor = 'red';
 		setTimeout(function () {
@@ -77,6 +94,14 @@ let allBtns = document.querySelectorAll('.btn');
 // Add event listener to all the buttons
 for (btn of allBtns) {
 	btn.addEventListener('click', btnPress);
+}
+
+// Check and update high score
+function checkHighScore(score) {
+	if (score > highScore) {
+		highScore = score;
+	}
+	return highScore;
 }
 
 // Reset the game
